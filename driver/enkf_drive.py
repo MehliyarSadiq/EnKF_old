@@ -23,7 +23,7 @@ import restart_gen as rg # ???
 import time_module as tm # time conversion
 
 
-# START
+### START ###
 print '*'*80
 print ''*30+'CO2 ENSEMBLE RUN DRIVER'+'*'*30
 print '*'*80
@@ -32,25 +32,25 @@ print ' '*30
 print '======>Step 1: Generate co2 emission data<======'
 
 co2=co2em.transcom_co2_st()
-# starting time 
 
+# starting time 
 yyyy=2003
 mm=1
 dd=1
 
-temp_res=8 # 8 days 
-timestep=temp_res*24.0*3600.0 #  8-days
-ntime=12
+temp_res=8                     # 8 days 
+timestep=temp_res*24.0*3600.0  # 8-days in seconds
+ntime=12                       # ???
 pos=list()
-ipos=0
-gmt=systime.gmtime()
-a_mst=[1, 186, 370]
-a_mend=[185, 369, 553]
+ipos=0                         # ???
+gmt=systime.gmtime()           # GMT time. UTC time
+a_mst=[1, 186, 370]            # ???
+a_mend=[185, 369, 553]         # ???
 # a_mst=[1]
 # a_mend=[185]
 new_restart=True
-nrun=len(a_mst)
-ftt=open(gcdf.data_path+"ens_pos.dat", "w")
+nrun=len(a_mst)                # number of runs?
+ftt=open(gcdf.data_path+"ens_pos.dat", "w") 
 line='geos_chem run at %4.4d%2.2d%2.2d, %2.2d:%2.2d:%2.2d' % (gmt[0], gmt[1], gmt[2], gmt[3], gmt[4], gmt[5])
 print line
 ftt.write(line+'\n')
@@ -58,6 +58,7 @@ line=r'temp_res: %4.4d  nstep: %4.4d' % (temp_res, ntime)
 ftt.write(line+'\n')
 line='mem_st mem_end year_st  year_end day_st day_end flnm'
 ftt.write(line+'\n')
+
 for irun in range(nrun):
     mst=a_mst[irun]
     mend=a_mend[irun]
@@ -86,6 +87,8 @@ for irun in range(nrun):
     line=line+ ' '+co2flnm
     print line
     ftt.write(line+'\n')
+    
+    
     print '======>Step 2: Generate input file<======'
 
     # igg.create_new_input_file(co2.yyyy, co2.doy, member_start=mst, \
@@ -95,6 +98,8 @@ for irun in range(nrun):
     
     os.remove('input.geos')
     os.rename('input.geos.new', 'input.geos')
+    
+    
     print '======>Step 3: Generate restart file<====='
     ntracers=mend-mst+1
     rsf=rg.geos_chem_restart_file('restart.jan2003.kalman.borealasia')
@@ -110,6 +115,8 @@ for irun in range(nrun):
     if (new_restart):
         new_lon, new_lat=co2em.GET_GRID()
         rsf.copy_restart_file(1, full_restart_name,real_ntracers, tau0, do_regrid=True, new_lon=new_lon, new_lat=new_lat)
+        
+        
     print '======>Step 4: Launch geos-chem<======'
     os.system('sh ./rungeos.sh')
 ftt.close()
