@@ -1,5 +1,13 @@
 ###! /home/lfeng/tmp_cp/ecmwf/python2.5/bin/python2.5
 
+"""
+Originally written by Dr. Liang Feng (University of Edinburgh), circa 2009
+Orginal environment: python 2.5
+Rewritten and commented by Mehliyar Sadiq, 2020
+First successful version: 2020-xxxx
+"""
+
+
 # default modules in Python:
 import sys # constants, functions and methods of the Python interpreter
 import os # operating system dependent functionality
