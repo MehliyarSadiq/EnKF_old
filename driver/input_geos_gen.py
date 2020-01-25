@@ -46,7 +46,7 @@ def create_new_input_file(run_step,\
     tst=tm.doy_to_utc(dst, sec=0, yyyy=yst)
     tst=tst.replace('-', '')
     tst=tst.replace(':', '')
-    print tst
+    print(tst)
     if (em_step==None):
         iday0=DOY[0]
         for iday in DOY[1:]:
@@ -75,11 +75,11 @@ def create_new_input_file(run_step,\
     tend=tm.doy_to_utc(ded, sec=0, yyyy=yed)
     tend=tend.replace('-', '')
     tend=tend.replace(':', '')
-    print tend
+    print(tend)
 
     fin=open(tmpfile, "r")
     lines=fin.readlines()
-    print  len(lines)
+    print(len(lines))
     fin.close()
     fout=open(newfile, "w")
     section_start=0
@@ -140,12 +140,12 @@ def create_new_input_file(run_step,\
                     new_line=line_head+" "+tend+"   "
                     fout.write(new_line+"\n")
                 elif (line_count==3):
-                    print line_left
+                    print(line_left)
                     line_left=line_left.replace('$RUNPATH', run_path)
                     new_line=line_head+line_left
                     fout.write(new_line)
                 elif (line_count==4):
-                    print line_left
+                    print(line_left)
                     line_left=line_left.replace('STYYY.ENXXXX-ENXXXX', enafix)
                     new_line=line_head+line_left
                     fout.write(new_line)
@@ -216,7 +216,7 @@ def create_new_input_file(run_step,\
                                             
                     line_left=line_left+' '+'199' # 196 198 199 200 201 output other information
                     new_line=line_head+line_left+' \n'
-                    print new_line
+                    print(new_line)
                     # tx=raw_input()
                     
                     fout.write(new_line)
@@ -429,14 +429,14 @@ def create_new_input_file(run_step,\
                             # skip the line
                             
                             for ichar in line_left:
-                                if (ichar<>' '):
+                                if (ichar!=' '):
                                     break
                                 else:
                                     ispace=ispace+1
                             
                             sel_dd=sel_dd+ispace
                             
-                            print line_left
+                            print(line_left)
                             
                             if (sel_dd>=len(line_left)):
                                 sel_dd=len(line_left)-1
@@ -469,7 +469,7 @@ def create_new_input_file(run_step,\
     
     fout.close()
     
-    print 'reach the end'
+    print('reach the end')
     #  tx2=raw_input()
     
 if (__name__=="__main__"):

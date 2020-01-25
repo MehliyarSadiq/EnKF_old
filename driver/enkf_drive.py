@@ -24,12 +24,12 @@ import time_module as tm # time conversion
 
 
 ### START ###
-print '*'*80
-print ''*30+'CO2 ENSEMBLE RUN DRIVER'+'*'*30
-print '*'*80
-print ' '*30
+print('*'*80)
+print(''*30+'CO2 ENSEMBLE RUN DRIVER'+'*'*30)
+print('*'*80)
+print(' '*30)
 
-print '======>Step 1: Generate co2 emission data<======'
+print('======>Step 1: Generate co2 emission data<======')
 
 co2=co2em.transcom_co2_st()
 
@@ -52,7 +52,7 @@ new_restart=True
 nrun=len(a_mst)                # number of runs?
 ftt=open(gcdf.data_path+"ens_pos.dat", "w") 
 line='geos_chem run at %4.4d%2.2d%2.2d, %2.2d:%2.2d:%2.2d' % (gmt[0], gmt[1], gmt[2], gmt[3], gmt[4], gmt[5])
-print line
+print(line)
 ftt.write(line+'\n')
 line=r'temp_res: %4.4d  nstep: %4.4d' % (temp_res, ntime)
 ftt.write(line+'\n')
@@ -62,15 +62,15 @@ ftt.write(line+'\n')
 for irun in range(nrun):
     mst=a_mst[irun]
     mend=a_mend[irun]
-    print  '-'*10+'starting year, month, day:',  yyyy, mm, dd
-    print  '-'*10+ 'timestep (day), ntime',  timestep/(24.0*3600.0),  ntime
+    print('-'*10+'starting year, month, day:',  yyyy, mm, dd)
+    print('-'*10+ 'timestep (day), ntime',  timestep/(24.0*3600.0),  ntime)
     if (irun==0):
-        print  '-'*10+'generat  prior' +'-'*10
+        print('-'*10+'generat  prior' +'-'*10)
         co2.gen_prior(timestep, ntime, yyyy,mm, dd)
         ids=1 # the first one is the mean state
         # the prefix  for co2 emission 
         co2flnm=gcdf.data_path+'/'+'CO2_EMISSION_EN' 
-        print  '-'*10+'generat  ensemble member' +'-'*10
+        print('-'*10+'generat  ensemble member' +'-'*10)
         for i in range(ntime):
             devs=co2.gen_def_ensemble(i)
             nmem=len(devs)
@@ -85,11 +85,11 @@ for irun in range(nrun):
 
     line=r'%4.4d %4.4d %4.4d %3.3d %3.3d %3.3d' % (mst, mend, co2.yyyy[0], co2.yyyy[-1], co2.doy[0], co2.doy[-1])
     line=line+ ' '+co2flnm
-    print line
+    print(line)
     ftt.write(line+'\n')
     
     
-    print '======>Step 2: Generate input file<======'
+    print('======>Step 2: Generate input file<======')
 
     # igg.create_new_input_file(co2.yyyy, co2.doy, member_start=mst, \
     #                      member_end=mend, co2flnm=co2flnm, time_start='20030328')
@@ -100,7 +100,7 @@ for irun in range(nrun):
     os.rename('input.geos.new', 'input.geos')
     
     
-    print '======>Step 3: Generate restart file<====='
+    print('======>Step 3: Generate restart file<=====')
     ntracers=mend-mst+1
     rsf=rg.geos_chem_restart_file('restart.jan2003.kalman.borealasia')
     yst=co2.yyyy[0]
@@ -117,7 +117,7 @@ for irun in range(nrun):
         rsf.copy_restart_file(1, full_restart_name,real_ntracers, tau0, do_regrid=True, new_lon=new_lon, new_lat=new_lat)
         
         
-    print '======>Step 4: Launch geos-chem<======'
+    print('======>Step 4: Launch geos-chem<======')
     os.system('sh ./rungeos.sh')
 ftt.close()
         

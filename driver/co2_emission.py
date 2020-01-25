@@ -256,7 +256,7 @@ def define_surface_co2_region_hr(x, y, xedge, yedge, \
     
     sub_sel_idx=list()
     region_count=0
-    print 'nlat_div', nlat_div, area_div
+    print('nlat_div', nlat_div, area_div)
     new_reg=list()
     for ilat in range(nlat_div):
         area_sum=area_sum+areas[ilat]
@@ -294,7 +294,7 @@ def define_surface_co2_region_hr(x, y, xedge, yedge, \
             
             
             ix, iy=lon_reg_id[sub_sel_idx], lat_reg_id[sub_sel_idx]
-            print shape(id_lon)
+            print(shape(id_lon))
             # print shape(ix), shape(iy)
             
             tmp_ix_pos=searchsorted(id_lon, ix)
@@ -304,9 +304,9 @@ def define_surface_co2_region_hr(x, y, xedge, yedge, \
             # print lon_pos_2[tmp_ix_pos]
             # print lon_pos_2
             
-            print 'nz', nz
+            print('nz', nz)
             new_reg_id=lon_pos_2[tmp_ix_pos]+(region_count)*nlon_reg
-            print min(new_reg_id), max(new_reg_id), region_count
+            print(min(new_reg_id), max(new_reg_id), region_count)
             
             # new_reg_id=where(new_reg_id==0, 0, new_reg_id+nz)
             new_map[ix, iy]=new_reg_id  # -type_map[ix,iy]
@@ -330,7 +330,7 @@ def define_surface_co2_region_hr(x, y, xedge, yedge, \
     nx=size(xedge)-1
     ny=size(yedge)-1
     new_map=new_map[0:nx, 0:ny]
-    print max(new_map.flat)
+    print(max(new_map.flat))
 
     #  figure(2)
     # gpl.plot_map(type_map,lon, lat,  use_pcolor=1, cmap=cm.Paired) #Set1)
@@ -369,7 +369,7 @@ def define_surface_co2_region_hr(x, y, xedge, yedge, \
     for ireg in range(1, nlon_reg*nlat_reg):
         regname='SUB_R%2.2dS%2.2d' % (sel_id, ireg)
         new_reg.append(regname)
-    print new_reg
+    print(new_reg)
     all_land_reg=land_reg[0:sel_id+1]+new_reg+land_reg[sel_id+1:]
     def_err=all_def_err_land+def_err_ocean
     return new_map, all_land_reg, ocean_reg, def_err
@@ -426,7 +426,7 @@ def define_surface_co2_region_cell(x, y, xedge, yedge, \
     nx=size(xedge)-1
     ny=size(yedge)-1
     new_map=new_map[0:nx, 0:ny]
-    print max(new_map.flat)
+    print(max(new_map.flat))
     type_map=array(new_map)
     
     lon=array(xedge[0:nx])
@@ -442,7 +442,7 @@ def define_surface_co2_region_cell(x, y, xedge, yedge, \
         new_map[idx_lon[pt], idx_lat[pt]]=cnt_cell
         cnt_cell=cnt_cell+1
     
-    print 'cnt_cell', cnt_cell
+    print('cnt_cell', cnt_cell)
     
     type_map=where(type_map>sel_id, type_map+cnt_cell-1, type_map)
     type_map=type_map+new_map
@@ -482,10 +482,10 @@ def define_surface_co2_region_cell(x, y, xedge, yedge, \
     for ireg in range(1, cnt_cell):
         regname='SUB_R%2.2dS%2.2d' % (sel_id, ireg)
         new_reg.append(regname)
-    print new_reg
+    print(new_reg)
     
     all_land_reg=land_reg[0:sel_id+1]+new_reg+land_reg[sel_id+1:]
-    print len(all_land_reg)
+    print(len(all_land_reg))
     def_err=all_def_err_land+def_err_ocean
     # subplot(2,1,1)
     # gpl.plot_map(type_map,x, y,  use_pcolor=1,cmap=cm.jet)
@@ -596,8 +596,8 @@ def  READ_ANNUAL_FOSSILCO2(DATA_DIR, nx, ny, CO2_DIR='CO2_200508', flnmpref='fos
         data=squeeze(data)
         return data,dunit
     else:
-        print 'error in read data ', ios
-        print FILENAME
+        print('error in read data ', ios)
+        print(FILENAME)
         return None, ""
     
 def  READ_ANNUAL_OCEANCO2(DATA_DIR, nx, ny, CO2_DIR='CO2_200508', flnmpref='ocean_CO2',  tracer=2,category='CO2-SRCE'):
@@ -616,8 +616,8 @@ def  READ_ANNUAL_OCEANCO2(DATA_DIR, nx, ny, CO2_DIR='CO2_200508', flnmpref='ocea
         data=squeeze(data)
         return data,dunit
     else:
-        print 'error in read data ', ios
-        print FILENAME
+        print('error in read data ', ios)
+        print(FILENAME)
         return None, ""
 
 def  READ_ANNUAL_BIOFUELCO2(DATA_DIR, nx, ny, CO2_DIR='CO2_200508', flnmpref='/biofuel_CO2',  tracer=5,category='CO2-SRCE'):
@@ -638,8 +638,8 @@ def  READ_ANNUAL_BIOFUELCO2(DATA_DIR, nx, ny, CO2_DIR='CO2_200508', flnmpref='/b
         data=squeeze(data)
         return data,dunit
     else:
-        print 'error in read data ', ios
-        print FILENAME
+        print('error in read data ', ios)
+        print(FILENAME)
         return None, ""
 
 def  READ_ANNUAL_BIONET_CO2(DATA_DIR, nx, ny, CO2_DIR='CO2_200508', flnmpref='//net_terr_exch_CO2',  tracer=5,category='CO2-SRCE'):
@@ -658,8 +658,8 @@ def  READ_ANNUAL_BIONET_CO2(DATA_DIR, nx, ny, CO2_DIR='CO2_200508', flnmpref='//
         return data,dunit
     
     else:
-        print 'error in read data ', ios
-        print FILENAME
+        print('error in read data ', ios)
+        print(FILENAME)
         return None, ""
 
 
@@ -689,8 +689,8 @@ def  READ_BBIO_DAILYAVERAGE(DATA_DIR, nx, ny, \
         data=squeeze(data)
         return data,dunit
     else:
-        print 'error in read data ', ios
-        print FILENAME
+        print('error in read data ', ios)
+        print(FILENAME)
         return None, ""
 def   READ_BBIO_DIURNALCYCLE(DATA_DIR, nx, ny, \
                             MONTH, DAY, YYYY, HOUR,\
@@ -719,8 +719,8 @@ def   READ_BBIO_DIURNALCYCLE(DATA_DIR, nx, ny, \
         data=squeeze(data)
         return data,dunit
     else:
-        print 'error in read data ', ios
-        print FILENAME
+        print('error in read data ', ios)
+        print(FILENAME)
         return None, ""
 
 def   READ_MONTH_BIOBRN_CO2(DATA_DIR, nx, ny, \
@@ -761,8 +761,8 @@ def   READ_MONTH_BIOBRN_CO2(DATA_DIR, nx, ny, \
         dunit='molec/cm2/s'
         return data,dunit
     else:
-        print 'error in read data ', ios
-        print FILENAME
+        print('error in read data ', ios)
+        print(FILENAME)
         return None, ""
     
 def EMISSCO2(YYYY, MONTH, DAY, HOUR=12, do_debug=False):
@@ -1010,8 +1010,8 @@ class transcom_co2_st:
 
         
         self.reg_area=array(self.reg_area)
-        print shape(self.reg_area), shape(self.def_err)
-        print 'reg_area', self.reg_area[-4:-1]
+        print(shape(self.reg_area), shape(self.def_err))
+        print('reg_area', self.reg_area[-4:-1])
         
         # self.def_err[1:]=self.def_err[1:]/self.reg_area[1:] # to kgCO2 /cm2/s
     
@@ -1109,10 +1109,10 @@ class transcom_co2_st:
         stt=zeros([self.nx, self.ny], float)
         for ireg in range(self.nreg):
             idx=self.idx[ireg]
-	    if (rescale):
-            	stt[idx]=stv[ireg]*self.areas[idx]/self.reg_area[ireg]      
-	    else:
-		stt[idx]=stv[ireg]
+        if (rescale):
+            stt[idx]=stv[ireg]*self.areas[idx]/self.reg_area[ireg]      
+        else:
+            stt[idx]=stv[ireg]
             # print ireg, stv[ireg]
         
         if (return_grid):
@@ -1172,7 +1172,7 @@ class transcom_co2_st:
             funit=38
             title='ENKF_CO2'
             stat=bp.open_bpch2_for_write(funit,full_flnm, title)
-            if (stat<>0):
+            if (stat!=0):
                 return stat
             
             lonres=self.lonres
@@ -1237,7 +1237,7 @@ class transcom_co2_st:
             funit=38
             title='ENKF_CO2'
             stat=bp.open_bpch2_for_write(funit,full_flnm, title)
-            if (stat<>0):
+            if (stat!=0):
                 return stat
             
             ntracer=ids
@@ -1310,7 +1310,7 @@ class transcom_co2_st:
         
         self.err_cov=zeros([self.nreg, self.nreg, self.ntime], float)
         ist=0
-        print 'lang_reg', size(self.land_reg), size(self.ocean_reg)
+        print('lang_reg', size(self.land_reg), size(self.ocean_reg))
         for i in range(len(self.land_reg)):
             px=self.idx[i]
             lonx=lon_m[px]
@@ -1376,7 +1376,7 @@ class transcom_co2_st:
     
 
         idx=[23,24,25]
-        print 'self_err', diag(self.err_cov[20:, 20:, 0])
+        print('self_err', diag(self.err_cov[20:, 20:, 0]))
         
                         
         
@@ -1385,11 +1385,11 @@ class transcom_co2_st:
         stv=self.prior[:,  itime]
         err=self.err[:,itime]
         head_width=30
-        print '='*80
+        print('='*80)
         sdate=r'%4.4dD%3.3d' % (self.yyyy[itime],self.doy[itime])
-        print '----------CO2 EMISSION ON '+sdate+'-------------'
-        print '      region name:   emission (Gt C/y)    err (Gt C/y)'
-        print '='*80
+        print('----------CO2 EMISSION ON '+sdate+'-------------')
+        print('      region name:   emission (Gt C/y)    err (Gt C/y)')
+        print('='*80)
         temi=0.0
         terr=0.0
         for ireg in range(self.nreg):
@@ -1403,20 +1403,20 @@ class transcom_co2_st:
             terr=terr+emi_err**2
             sline=r'%13.5f, %13.5f' % (emi, emi_err)
             line=line_head+': '+sline
-            print line
-        print '-'*80
+            print(line)
+        print('-'*80)
         reg_name='total'
         lrg=len(reg_name)
         line_head=reg_name+' '*(head_width-lrg)
         sline=r'%13.5f, %13.5f' % (temi, sqrt(terr))
         line=line_head+': '+sline
-        print line
-        print '-'*80
+        print(line)
+        print('-'*80)
         
-        print '-'*30+'Error covariance'+'-'*30
+        print('-'*30+'Error covariance'+'-'*30)
         err_mat=self.scale_to_GtC*self.scale_to_GtC*self.err_cov[:,:,itime]
-        print 'I am here', diag(err_mat[20:, 20:])
-        print  err_mat[10:, 23]
+        print('I am here', diag(err_mat[20:, 20:]))
+        print(err_mat[10:, 23])
         
         subplot(2,1,1)
         pcolor(err_mat[3:,3:], vmin=0.0, vmax=6.5)
@@ -1435,7 +1435,7 @@ class transcom_co2_st:
         
         # print array2string(err_mat, precision=3)
         
-        print '='*80
+        print('='*80)
         
                           
             
@@ -1469,42 +1469,4 @@ if (__name__=="__main__"):
         ftt.write(line+'\n')
         ids=ids+nmem
     
-    ftt.close()
-
-    
-        
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-              
-    
-        
+    ftt.close()  

@@ -7,9 +7,9 @@ import time_module as tm
 class geos_chem_restart_file:
     def __init__(self, org_flnm=None):
         self.ntracers=0
-        if (org_flnm<>None):
+        if (org_flnm!=None):
              bpch2=brw.bpch2_file_rw(org_flnm, 'r', do_read=1)
-             print bpch2.stat
+             print(bpch2.stat)
              self.org_flnm=org_flnm
              self.bpch2=bpch2
         else:
@@ -21,7 +21,7 @@ class geos_chem_restart_file:
 
         data_list, found=self.bpch2.get_data(None, sel_idx, None, None)
         if (found[0]==0):
-            print 'No record found'
+            print('No record found')
             return None
         
         bpdata=data_list[0]
@@ -29,31 +29,31 @@ class geos_chem_restart_file:
         ifunit=95
         bpch2_w.open_bpch2_w(ifunit,'test')
         
-        if (newtau<>None):
+        if (newtau!=None):
             tau1, tau0=bpdata.get_attr(['tau0', 'tau1'])
             tau1=newtau+tau1-tau0
             tau0=newtau
             bpdata.set_attr('tau0', tau0)
             bpdata.set_attr('tau', tau1)
         sl=r'write restart data for %d tracers into file ' % ntracers
-        print '='*80
-        print sl+newfile.strip()
+        print('='*80)
+        print(sl+newfile.strip())
         if (do_regrid):
-            print 'I am do regrid', size(new_lon), size(new_lat)
+            print('I am do regrid', size(new_lon), size(new_lat))
             
             bpdata.regrid_data(new_lon, new_lat)
         
         for i in range(ntracers):
             bpdata.ntracer=i+1
             traname=bpdata.get_attr(['name'])
-            print i, traname[0].strip(), bpdata.category.strip(), bpdata.ntracer, bpdata.unit.strip(), shape(bpdata.data), max(bpdata.data.flat), min(bpdata.data.flat)
+            print(i, traname[0].strip(), bpdata.category.strip(), bpdata.ntracer, bpdata.unit.strip(), shape(bpdata.data), max(bpdata.data.flat), min(bpdata.data.flat))
             
             
             bpdata.write_to_bpch2_file(ifunit)
             
         bpch2_w.close_bpch2_file()
-        print '-'*30+'Done'+'-'*30
-        print '='*80
+        print('-'*30+'Done'+'-'*30)
+        print('='*80)
 
     def mod_restart_file(self,sel_idx, newfile, ntracers=1, \
                          newtau=None, fixed_value=None, do_regrid=False,  \
@@ -62,7 +62,7 @@ class geos_chem_restart_file:
 
         data_list, found=self.bpch2.get_data(None, sel_idx, None, None)
         if (found[0]==0):
-            print 'No record found'
+            print('No record found')
             return None
         
         bpdata=data_list[0]
@@ -70,17 +70,17 @@ class geos_chem_restart_file:
         ifunit=95
         bpch2_w.open_bpch2_w(ifunit,'test')
         
-        if (newtau<>None):
+        if (newtau!=None):
             tau1, tau0=bpdata.get_attr(['tau0', 'tau1'])
             tau1=newtau+tau1-tau0
             tau0=newtau
             bpdata.set_attr('tau0', tau0)
             bpdata.set_attr('tau', tau1)
         sl=r'write restart data for %d tracers into file ' % ntracers
-        print '='*80
-        print sl+newfile.strip()
+        print('='*80)
+        print(sl+newfile.strip()
         if (do_regrid):
-            print 'I am doing regrid', size(new_lon), size(new_lat)
+            print('I am doing regrid', size(new_lon), size(new_lat))
             
             bpdata.regrid_data(new_lon, new_lat)
 
@@ -88,21 +88,21 @@ class geos_chem_restart_file:
         bpdata.ntracer=1
         bpdata.write_to_bpch2_file(ifunit)
         traname=bpdata.get_attr(['name'])
-        print 0, traname[0].strip(), bpdata.category.strip(), bpdata.ntracer, bpdata.unit.strip(), shape(bpdata.data), max(bpdata.data.flat), min(bpdata.data.flat)
-        if (fixed_value<>None):
+        print(0, traname[0].strip(), bpdata.category.strip(), bpdata.ntracer, bpdata.unit.strip(), shape(bpdata.data), max(bpdata.data.flat), min(bpdata.data.flat))
+        if (fixed_value!=None):
             bpdata.data=bpdata.data-bpdata.data+fixed_value
         
         for i in range(1, ntracers):
             bpdata.ntracer=i+1
             traname=bpdata.get_attr(['name'])
-            print i+1, traname[0].strip(), bpdata.category.strip(), bpdata.ntracer, bpdata.unit.strip(), shape(bpdata.data), max(bpdata.data.flat), min(bpdata.data.flat)
+            print(i+1, traname[0].strip(), bpdata.category.strip(), bpdata.ntracer, bpdata.unit.strip(), shape(bpdata.data), max(bpdata.data.flat), min(bpdata.data.flat))
             
             
             bpdata.write_to_bpch2_file(ifunit)
             
         bpch2_w.close_bpch2_file()
-        print '-'*30+'Done'+'-'*30
-        print '='*80
+        print('-'*30+'Done'+'-'*30)
+        print('='*80)
         
     
     def adjust_restart_file(self, restart_flnms, enst, enend, nt_time, tma):
@@ -169,8 +169,3 @@ if (__name__=="__main__"):
     full_restart_name='restart.20060101'
     rsf.mod_restart_file(1, full_restart_name,real_ntracers, tau0, \
                          fixed_value=1.0e-8, do_regrid=True, new_lon=new_lon, new_lat=new_lat)
-    
-
-    
-    
-    
