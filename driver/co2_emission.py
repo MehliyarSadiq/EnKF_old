@@ -2,9 +2,9 @@ from pylab import *
 from numpy import *
 import  geo_constant as gc
 import geos_chem_def as gcfs
-import bpch2_rw_v2 as brw
-import bpch2_rw_py as bp
-import grid_py as gm
+#import bpch2_rw_v2 as brw # commented out, dont need bpch format in later GEOS-Chem version
+#import bpch2_rw_py as bp # commented out, dont need bpch format in later GEOS-Chem version
+#import grid_py as gm   # cannot import
 import geos_read_input as gri
 import time_module as tm
 import gen_plots as gpl

@@ -1,61 +1,55 @@
 # default directories
 import time_module as tm
-run_path='/scratch/local/lfeng/oco2_project/enkf_oco2_inv_792/'
-data_path=run_path+'/enkf_output/' # the model output
-rerun_datapath=run_path+'./enkf_rerun/'
-hm_data_path=run_path+'/surface_hm/' # the model output
-sat_hm_data_path=run_path+'/b340_hm/' # the model output
 
+# GEOS-Chem related directories
+run_path='/scratch/local/lfeng/oco2_project/enkf_oco2_inv_792/' # 
+data_path=run_path+'/enkf_output/'     # model output
+rerun_datapath=run_path+'/enkf_rerun/' # restart directory
+hm_data_path=run_path+'/surface_hm/'   # model output
+sat_hm_data_path=run_path+'/b340_hm/'  # model output
 
-# rerun_datapath=run_path+'./enkf_rerun_pb/'
+def_input_file=run_path+'/input.geos'   # GEOS-CHEM model input file
 
-# obs_path=run_path+'/oco_obs/'            # observations
-inv_path=run_path+'/oco_inv/'
-def_input_file=run_path+'/input.geos' # GEOS-CHEM model input file
+# observation related
+# obs_path=run_path+'/oco_obs/'            
+inv_path=run_path+'/oco_inv/'           # inversion directory
 oco_orbit_path=run_path+'/gosat_orbit/' # OCO orbit 
 oco_ak_path=run_path+'/gosat_ak/'       # OCO averaging kernel
-#  starting time for geos chem simulation
-view_type='new_iss'
-view_mode= "glint"
+
 # for multipe observation
+view_type='new_iss'
+view_mode= "glint" # 'glint', 'nadir' or 'n16g16'
+obs_path=run_path+'/'+view_type+'_obs/'  # observation directory
 
-
-
-obs_path=run_path+'/'+view_type+'_obs/'
-
+#  starting time for geos chem simulation
 st_yyyy, st_mm, st_dd=2009,1,1
-st_doy=tm.day_of_year(st_yyyy, st_mm, st_dd)
+st_doy=tm.day_of_year(st_yyyy, st_mm, st_dd) # day of year
 
 # time resultion in day
-use_fixed_mod_err=True
-temporal_resolution=32  #  the temporal resolution for inversions in days
+use_fixed_mod_err=True  # ???
+temporal_resolution=32  # temporal resolution for inversions in days
 
-# the ending time for geos chem simulation
-# inversion lag window =temporal_resolution*n_inv_window
+# ??? the ending time for geos chem simulation
+# inversion lag window = temporal_resolution*n_inv_window
 inv_lag_window=4 #
 
-ntime_geos_chem=inv_lag_window # 2 *inv_lag_window if used the moving window # t#the last day of geos-chem simulation is given by ntime * temporal_resolution
+ntime_geos_chem=inv_lag_window # 2*inv_lag_window if used the moving window # the last day of geos-chem simulation is given by ntime * temporal_resolution
 inv_ntime=inv_lag_window
 
-# spatial resolution
-
+# spatial resolution for land and ocean
 n_land_lat_div, n_land_lon_div=3,3
-# n_ocean_lat_div,n_ocean_lon_div=3,3
-n_ocean_lat_div,n_ocean_lon_div=2,2
+n_ocean_lat_div,n_ocean_lon_div=2,2 # or 3,3
 
+# number of regions???
 region_num=11*n_land_lat_div*n_land_lon_div+11*n_ocean_lat_div*n_ocean_lon_div+1
 num_used_en=max(340, region_num) # the restart file
 output_daily_obs=True
 
 new_restart=True
-restart_file=data_path+'restart.jan2003.kalman.borealasia'  # 
+restart_file=data_path+'restart.jan2003.kalman.borealasia'  # first restart file/initial condition
 
-#
-# if choose do short will start a run with only 5 tagged tracers
-
-do_short= False
-# view modes 
-# view_mode= 'glint'  # 'glint' # 'nadir', 'n16g16'
+do_short= False # if choose do short will start a run with only 5 tagged tracers
+ 
 
 ######  the following section  is  for inversion options ####
 # observation options
