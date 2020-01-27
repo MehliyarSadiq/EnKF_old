@@ -40,7 +40,7 @@ dd=1
 
 temp_res=8                     # 8 days 
 timestep=temp_res*24.0*3600.0  # 8-days in seconds
-ntime=12                       # ???
+ntime=12                       # 12 cycles? 12 ensembles?
 pos=list()
 ipos=0                         # ???
 gmt=systime.gmtime()           # GMT time. UTC time
