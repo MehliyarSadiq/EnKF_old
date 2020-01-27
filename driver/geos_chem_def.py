@@ -8,8 +8,6 @@ rerun_datapath=run_path+'/enkf_rerun/' # restart directory
 hm_data_path=run_path+'/surface_hm/'   # model output
 sat_hm_data_path=run_path+'/b340_hm/'  # model output
 
-def_input_file=run_path+'/input.geos'   # GEOS-CHEM model input file
-
 # observation related
 # obs_path=run_path+'/oco_obs/'            
 inv_path=run_path+'/oco_inv/'           # inversion directory
@@ -17,9 +15,11 @@ oco_orbit_path=run_path+'/gosat_orbit/' # OCO orbit
 oco_ak_path=run_path+'/gosat_ak/'       # OCO averaging kernel
 
 # for multiple observation
-view_type='new_iss'
-view_mode= "glint" # 'glint', 'nadir' or 'n16g16'
-obs_path=run_path+'/'+view_type+'_obs/'  # observation directory
+view_type='new_iss' # ???
+view_mode= "glint"  # 'glint', 'nadir' or 'n16g16'
+obs_path=run_path+'/'+view_type+'_obs/' # observation directory
+
+def_input_file=run_path+'/input.geos'   # GEOS-Chem model input file
 
 #  starting time for geos chem simulation
 st_yyyy, st_mm, st_dd=2009,1,1
@@ -309,12 +309,4 @@ add_ersl=False
 nbias=0        # ??????
 mod_bias=[0.0]
 bias_err=[0.0]
-
-
-
-
-
-
-
-
 

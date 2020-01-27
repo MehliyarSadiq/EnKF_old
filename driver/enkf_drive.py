@@ -1,22 +1,26 @@
-###! /home/lfeng/tmp_cp/ecmwf/python2.5/bin/python2.5
 
 """
+    Ensemble Kalman Filter Driver
+        
         Originally written by Dr. Liang Feng (University of Edinburgh), circa 2009
         Orginal environment: python 2.5
         Rewritten and commented by Mehliyar Sadiq, 2020
         First working version: 2020-xxxx
+        
+    Four steps:
+        1, generate CO2 emission data
+        2, generate input file
+        3, generate restart file
+        4, launch geos-chem simulation
 """
 
-
-# default modules in Python:
+# modules in Python:
 import sys # constants, functions and methods of the Python interpreter
 import os # operating system dependent functionality
 import time as systime # functions for working with time
 
 # modules written by Liang:
-# definitions of paths, time, resolution, inversion options, instruments, etc.
-import geos_chem_def as gcdf
-
+import geos_chem_def as gcdf # definitions of paths, time, resolution, inversion options, instruments, etc.
 #import input_geos_gen as igg # create the new input to drive the ensemble run
 #import co2_emission as co2em # ???
 #import restart_gen as rg # ???
@@ -29,7 +33,6 @@ print('*'*20+'CO2 ENSEMBLE RUN DRIVER'+'*'*30)
 print('*'*70)
 
 print('======>Step 1: Generate co2 emission data<======')
-
 #co2=co2em.transcom_co2_st()
 
 # cound the following definitions be moved to geos_chem_def.py??? 
@@ -42,12 +45,12 @@ ntime=12                       # 12 cycles? 12 ensembles?
 pos=list()
 ipos=0                         # ???
 gmt=systime.gmtime()           # GMT time. UTC time
-a_mst=[1, 186, 370]            # ??? model start?
-a_mend=[185, 369, 553]         # ??? model end?
-# a_mst=[1]                    # testing?
+a_mst=[1, 186, 370]            # model start?
+a_mend=[185, 369, 553]         # model end?
+# a_mst=[1]                    # testing one?
 # a_mend=[185]
 new_restart=True
-nrun=len(a_mst)                # number of runs?
+nrun=len(a_mst)                # number of runs? 3
 
 ftt=open(gcdf.data_path+"ens_pos.dat", "w") # is ens_pos_dat a temp file to record information?
 line='geos_chem run at %4.4d%2.2d%2.2d, %2.2d:%2.2d:%2.2d' % (gmt[0], gmt[1], gmt[2], gmt[3], gmt[4], gmt[5]) # echos real time, as starting point
