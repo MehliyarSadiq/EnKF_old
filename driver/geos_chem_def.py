@@ -1,4 +1,4 @@
-# default directories
+# GEOS-Chem definitions
 import time_module as tm
 
 # GEOS-Chem related directories
@@ -16,7 +16,7 @@ inv_path=run_path+'/oco_inv/'           # inversion directory
 oco_orbit_path=run_path+'/gosat_orbit/' # OCO orbit 
 oco_ak_path=run_path+'/gosat_ak/'       # OCO averaging kernel
 
-# for multipe observation
+# for multiple observation
 view_type='new_iss'
 view_mode= "glint" # 'glint', 'nadir' or 'n16g16'
 obs_path=run_path+'/'+view_type+'_obs/'  # observation directory
@@ -30,10 +30,11 @@ use_fixed_mod_err=True  # ???
 temporal_resolution=32  # temporal resolution for inversions in days
 
 # ??? the ending time for geos chem simulation
+inv_lag_window=4
 # inversion lag window = temporal_resolution*n_inv_window
-inv_lag_window=4 #
 
-ntime_geos_chem=inv_lag_window # 2*inv_lag_window if used the moving window # the last day of geos-chem simulation is given by ntime * temporal_resolution
+ntime_geos_chem=inv_lag_window 
+# 2*inv_lag_window if used the moving window # the last day of geos-chem simulation is given by ntime * temporal_resolution
 inv_ntime=inv_lag_window
 
 # spatial resolution for land and ocean
@@ -42,23 +43,23 @@ n_ocean_lat_div,n_ocean_lon_div=2,2 # or 3,3
 
 # number of regions???
 region_num=11*n_land_lat_div*n_land_lon_div+11*n_ocean_lat_div*n_ocean_lon_div+1
-num_used_en=max(340, region_num) # the restart file
-output_daily_obs=True
+num_used_en=max(340, region_num) # number of ensembles
 
+output_daily_obs=True
 new_restart=True
+
 restart_file=data_path+'restart.jan2003.kalman.borealasia'  # first restart file/initial condition
 
 do_short= False # if choose do short will start a run with only 5 tagged tracers
- 
 
-######  the following section  is  for inversion options ####
-# observation options
+
+######  the following section  is  for inversion options #####
 do_update=True    # force the system to read in the data again
-# if use old data provide the file name
-xy_obs_file=data_path+'/'+view_mode+'_.2003D001_N02.nc'
 
-select_obs=False # True # False  # use all observation 
-add_rnd_err= False # True # True # False  # True # True # True
+xy_obs_file=data_path+'/'+view_mode+'_.2003D001_N02.nc' # if use old data provide the file name
+
+select_obs=False # use all observation 
+add_rnd_err= False # add random error
 sate_err_scale=1.0
 obs_err_scale=1.0    
 
@@ -72,20 +73,17 @@ tcor_factor=1.0
 
 
 # tracer info file needs to initialize
-def_tracerinfo_file=run_path+"tracerinfo.dat"
-def_diaginfo_file=run_path+"diaginfo.dat"
+def_tracerinfo_file=run_path+"tracerinfo.dat" # ???
+def_diaginfo_file=run_path+"diaginfo.dat"     # ???
 
-#  a-priori error
-#  rescale the error covariance.
+# a-priori error
+# rescale the error covariance.
 # if necessary, you may use it to
 # convert the default digonal error covariance to a more complicated one.
 xnorm=0.3
 
 
-
-
-
-# run control 
+# run control ???
 do_debug=False    
 do_retry=False
 do_init_run=True
@@ -93,7 +91,7 @@ maxne=inv_lag_window*region_num
 start_step=0
 
 
-# tell which instrument will be 
+# tell which instrument will be ???????
 
 # view_type_list=['new_aqua', 'new_landsat']
 # view_mode_list=["glint", "glint"]
@@ -136,8 +134,6 @@ add_mean_flux_pb=0.0 #1.6
 # hm_update_list=[False, False, False]
 # mean_update_list=[True, True, True] # ,True,True,True]
 
-
-
 view_type_list=['esrl_flask']
 view_mode_list=[""]
 view_station_list=['surface']
@@ -161,28 +157,10 @@ obs_path_list=['./obs_2014/event_nc/', './tccon/']
 hm_update_list=[False, False]
 mean_update_list=[True, True]
 
-
-
-view_type_list=['esrl_flask']
-view_mode_list=[""]
-view_station_list=['surface']
-obs_path_list=['./obs_2014/event_nc/']
-hm_update_list=[False]
-mean_update_list=[True]
-
-view_type_list=['esrl_flask']
-view_mode_list=[""]
-view_station_list=['surface']
-obs_path_list=['./obs_2014/event_nc/']
-hm_update_list=[False]
-mean_update_list=[True]
-
-
-
 view_type_list=['esrl_flask', 'TCC']
 view_mode_list=["", ""]
 view_station_list=['surface', 'tccon']
-obs_path_list=['./obs_2014/event_nc/','./tccon_2014/']
+obs_path_list=['./obs_2014/event_nc/','./tccon_2014/'] # different
 hm_update_list=[False, False]
 mean_update_list=[True, True]
 
@@ -190,7 +168,7 @@ view_type_list=['esrl_flask']
 view_mode_list=[""]
 view_station_list=['surface']
 obs_path_list=['./obs_2014/event_nc/']
-hm_update_list=[True]
+hm_update_list=[True] # different
 mean_update_list=[True]
 
 view_type_list=['gosat_v29']
@@ -205,8 +183,8 @@ mean_update_list=[True]
 view_type_list=['gosat_v29']
 view_mode_list=[""]
 view_station_list=['satellite']
-obs_path_list=[ './gosat_obs_v5/']
-hm_path_list=['./uol5_hm/']
+obs_path_list=[ './gosat_obs_v5/'] # different
+hm_path_list=['./uol5_hm/']        # different
 hm_update_list=[False]
 mean_update_list=[True]
 
@@ -214,12 +192,10 @@ mean_update_list=[True]
 view_type_list=['gosat_v29']
 view_mode_list=[""]
 view_station_list=['satellite']
-obs_path_list=[ './gosat_uol_mod2/']
+obs_path_list=[ './gosat_uol_mod2/'] # different
 hm_path_list=['./uol4_hm/']
 hm_update_list=[False]
 mean_update_list=[True]
-
-
 
 
 view_type_list=['gosat_v29', 'esrl_flask']
@@ -238,8 +214,6 @@ hm_update_list=[False]
 mean_update_list=[True]
 hm_path_list=['./surface_hm/']
 
-
-
 view_type_list=['gosat_v29']
 view_mode_list=[""]
 view_station_list=['satellite']
@@ -248,10 +222,6 @@ hm_path_list=['./oco2_hm/']
 hm_update_list=[False]
 mean_update_list=[True]
 
-
-
-
-
 view_type_list=['esrl_flask',  'esrl_tower', 'gosat_v29']
 view_mode_list=["", "", ""]
 view_station_list=['surface', 'surface', 'satellite']
@@ -259,7 +229,6 @@ obs_path_list=['./obs_2016/flask/','./obs_2016/tower/', './gosat_obs_v6/']
 hm_update_list=[False, False, False]
 mean_update_list=[True, True, True]
 hm_path_list=['./surface_hm/', './surface_hm/', './uol_hm_v6/']
-
 
 view_type_list=['esrl_flask', 'esrl_tower', 'gosat_v29']
 view_mode_list=["", "", ""]
@@ -277,7 +246,6 @@ hm_path_list=['./oco2_hm/']
 hm_update_list=[True]
 mean_update_list=[True]
 
-
 view_type_list=['esrl_flask',  'gosat_v29']
 view_mode_list=["", "", ""]
 view_station_list=['surface', 'satellite']
@@ -293,9 +261,6 @@ obs_path_list=['./obs_2016/flask/','./surface_prep_obs/']
 hm_update_list=[True, True]
 mean_update_list=[True, True]
 hm_path_list=['./surface_hm/', './surface_prep_hm/']
-
-
-
 
 view_type_list=['esrl_flask']
 view_mode_list=[""]
@@ -313,8 +278,6 @@ hm_update_list=[False, False]
 mean_update_list=[True, True]
 hm_path_list=['./surface_hm/', './surface_hm/']
 
-
-
 view_type_list=['gosat_v29']
 view_mode_list=[""]
 view_station_list=['satellite']
@@ -331,8 +294,6 @@ hm_update_list=[True]
 mean_update_list=[True]
 hm_path_list=['./surface_hm/']
 
-
-
 instrument_id={'gv':9001,\
                'ersl_flask':1001, \
                'ersl_in_situ':1002, \
@@ -343,10 +304,9 @@ instrument_id={'gv':9001,\
                'new_trmm_nadir':4001, 'new_trmm_glint':4002,\
                'new_landsat_nadir':5001, 'new_landsat_glint':5002}
 
-
 add_ersl=False
 
-nbias=0
+nbias=0        # ??????
 mod_bias=[0.0]
 bias_err=[0.0]
 
