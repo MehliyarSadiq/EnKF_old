@@ -1,18 +1,32 @@
+
+"""
+    Generate CO2 emission data
+        
+        Originally written by Dr. Liang Feng (University of Edinburgh), circa 2008
+        Orginal environment: python 2.5
+        Rewritten and commented by Mehliyar Sadiq, 2020
+        First working version: 2020-xxxx
+        
+    
+"""
+# python packages
 from pylab import *
 from numpy import *
+import numpy.linalg as nlg
+
+# self-made modules
 import  geo_constant as gc
 import geos_chem_def as gcfs
-#import bpch2_rw_v2 as brw # commented out, dont need bpch format in later GEOS-Chem version
-#import bpch2_rw_py as bp # commented out, dont need bpch format in later GEOS-Chem version
-#import grid_py as gm   # cannot import
+#import bpch2_rw_v2 as brw # commented out, dont need bpch format in later GEOS-Chem versions
+#import bpch2_rw_py as bp # commented out, dont need bpch format in later GEOS-Chem versions
+#import grid_py as gm     # cannot import
 import geos_read_input as gri
 import time_module as tm
 import gen_plots as gpl
-import gc_dist as gcd
-import numpy.linalg as nlg
+import gc_dist as gcd     # cannot import gc_dist.so
 
 
-
+# flags
 LFOSSCO2     = True
 LBIOCO2      = True
 LOCCO2       = True
@@ -23,7 +37,7 @@ LUSECASANEP  = False
 
 def GET_GRID(return_edge=False):
     #  print 'get_grid'
-    gm.grid_mod.compute_grid()
+    gm.grid_mod.compute_grid() # uses grid_py module, cannot import
     # print 'try setup grid'
     IIPAR=gm.grid_mod.get_x_size()
     JJPAR=gm.grid_mod.get_y_size()
@@ -46,6 +60,7 @@ def GET_GRID(return_edge=False):
 
 
 def DEFINE_FF_CO2_REGIONS(X,Y):
+    """ defined regions 8 to 12: Western Canada, Central Canada, Eastern Canada1&2, USA and Asia"""
     REGION=zeros(shape(X))
     REGION=REGION+18
 
@@ -95,10 +110,10 @@ def DEFINE_FF_CO2_REGIONS(X,Y):
     if (size(idx)>0):
         REGION[idx]=12
    
-
     return  REGION
 
 def DEFINE_BB_CO2_REGIONS(X,Y):
+    """ defined regions 13 to 17: same as above. No.16 might be wrong!!!"""
     REGION=zeros(shape(X))
     REGION=REGION+18
 
@@ -139,7 +154,7 @@ def DEFINE_BB_CO2_REGIONS(X,Y):
     vy=logical_and(Y >=  26.0, Y <  49.0 )
     idx=where(logical_and(vx, vy))
     if (size(idx)>0):
-        REGION[idx]=11
+        REGION[idx]=11 # ???
     
     #5 -- Asia
     vx=logical_and(X >=   95.0, X < 150.0)
@@ -148,7 +163,6 @@ def DEFINE_BB_CO2_REGIONS(X,Y):
     if (size(idx)>0):
         REGION[idx]=17
     
-        
     return  REGION
 
 def define_new_regions(lon, lat, old_map, lon_idx, lat_idx, reg_vals):
@@ -925,9 +939,9 @@ def STT_read_bpch2(flnm, tracer, tau0, nx, ny, nz=1,  category='CO2_FLUX'):
 class transcom_co2_st:
     def __init__(self, do_debug=False, sel_id=None, \
                  nlon_reg=4, nlat_reg=4):
-        """ initial the class for co2 emission """
+        """ initialize the class for co2 emission """
         # model grid  
-        lon, lat, xedge, yedge, areas=GET_GRID(True)
+        lon, lat, xedge, yedge, areas=GET_GRID(True) # doesn't work, cannot import
         
         
         self.lon=array(lon)
@@ -974,7 +988,6 @@ class transcom_co2_st:
         self.nreg=len(self.land_reg)+len(self.ocean_reg)
         self.def_err=array(def_err) #
         self.def_err[1:]=(1.0e12*gc.mco2/(86400*365.0*gc.mc))*self.def_err[1:] # convert to kgCO2/second
-        #
         
         # the time grid which contains how many 'time period' 
         self.ntime=0
@@ -1020,10 +1033,9 @@ class transcom_co2_st:
                  update_state=True, errset=None, do_debug=False):
         """
 
-        construction a prior surface flux used for a time period starting with yyyy0, mm0, dd0
+        construct a prior surface flux used for a time period starting with yyyy0, mm0, dd0
 
         """
-        
         
         tau0=tm.get_tau(yyyy0, mm0, dd0, hh0, mi0, sec0)
         
@@ -1053,9 +1065,7 @@ class transcom_co2_st:
             # if (itime in [0, 2, 4,6,8]):
             #    stv[3]=1.80*stv[3]
             #    stv[5]=1.80*stv[5]
-            
                 
-            
             # stv=1.8*stv
             self.prior[:,itime]=stv
             

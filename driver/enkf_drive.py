@@ -2,13 +2,13 @@
 """
     Ensemble Kalman Filter Driver
         
-        Originally written by Dr. Liang Feng (University of Edinburgh), circa 2009
+        Originally written by Dr. Liang Feng (University of Edinburgh), circa 2008
         Orginal environment: python 2.5
         Rewritten and commented by Mehliyar Sadiq, 2020
         First working version: 2020-xxxx
         
     Four steps:
-        1, generate CO2 emission data
+        1, generate CO2 emission data  # do I need it?
         2, generate input file
         3, generate restart file
         4, launch geos-chem simulation

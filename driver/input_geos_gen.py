@@ -1,6 +1,20 @@
+
+"""
+    General GEOS-Chem input file: input.geos
+        
+        Originally written by Dr. Liang Feng (University of Edinburgh), circa 2008
+        Orginal environment: python 2.5
+        Rewritten and commented by Mehliyar Sadiq, 2020
+        First working version: 2020-xxxx
+        
+"""
+# python modules
 from numpy import *
+
+# self-made modules
 import time_module as tm
 import geos_chem_def as gcdf
+
 def create_new_input_file(run_step,\
                           YYYY,\
                           DOY,\
@@ -77,11 +91,11 @@ def create_new_input_file(run_step,\
     tend=tend.replace(':', '')
     print(tend)
 
-    fin=open(tmpfile, "r")
+    fin=open(tmpfile, "r") # open a temporary input.geos
     lines=fin.readlines()
     print(len(lines))
     fin.close()
-    fout=open(newfile, "w")
+    fout=open(newfile, "w") # write to new input.geos file
     section_start=0
     colwidth=25
     line_count=0
