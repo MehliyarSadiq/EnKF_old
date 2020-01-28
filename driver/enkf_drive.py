@@ -52,7 +52,7 @@ a_mend=[185, 369, 553]         # model end?
 new_restart=True
 nrun=len(a_mst)                # number of runs? 3
 
-ftt=open(gcdf.data_path+"ens_pos.dat", "w") # is ens_pos_dat a temp file to record information?
+ftt=open(gcdf.data_path+"ens_pos.dat", "w") # is ens_pos_dat a temp file to record information? missing
 line='geos_chem run at %4.4d%2.2d%2.2d, %2.2d:%2.2d:%2.2d' % (gmt[0], gmt[1], gmt[2], gmt[3], gmt[4], gmt[5]) # echos real time, as starting point
 print(line)
 ftt.write(line+'\n')
@@ -94,7 +94,7 @@ for irun in range(nrun):
 
     # igg.create_new_input_file(co2.yyyy, co2.doy, member_start=mst, \
     #                      member_end=mend, co2flnm=co2flnm, time_start='20030328')
-    igg.create_new_input_file(co2.yyyy, co2.doy, member_start=mst, \
+    igg.create_new_input_file(co2.yyyy, co2.doy, member_start=mst, \ # input.geos.temp missing
                               member_end=mend, co2flnm=co2flnm)
     
     os.remove('input.geos')
